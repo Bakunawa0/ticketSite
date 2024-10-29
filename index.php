@@ -25,6 +25,7 @@
                             <td>
                                 <form action="make_ticket.php" method="POST" onsubmit="return confirm('Sell ticket for <?=$row['movieName'];?>?');">
                                     <input type="hidden" name="movieID" value="<?=$row['movieID'];?>">
+                                    <input type="hidden" name="amt"value=1>
                                     <input type="submit" value="Sell Ticket">
                                 </form>
                             </td>
