@@ -14,8 +14,11 @@
                     $_POST['amt']--;
                 break;
             case 'process':
-                setcookie("total", $_POST['amt'], time() + 60);
-                break;
+                setcookie("total", $_POST['amt'] * $movieInfo['price'], time() + 60);
+                setcookie("movieID", $_POST['movieID'], time() + 60);
+                setcookie("amt", $_POST['amt'], time() + 60);
+                header('location: show_ticket.php');
+                die();
             default:
                 break;
         }
@@ -48,9 +51,9 @@
                         </form>
                     </td>
                     <td>*</td>
-                    <td>₱<?=$movieInfo['price']?></td>
+                    <td>₱<?= sprintf("%.2f", $movieInfo['price'])?></td>
                     <td>=</td>
-                    <td>₱<?php echo $_POST['amt'] * $movieInfo['price']?></td>
+                    <td>₱<?= sprintf("%.2f", $_POST['amt'] * $movieInfo['price'])?></td>
                 </tr>
             </table>
             <!-- </span> -->
