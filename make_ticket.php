@@ -58,8 +58,8 @@
             </table>
             <!-- </span> -->
             <br>
-            <button onclick="window.location.replace('index.php');">Cancel</button>
-            <button onclick="(<?=$_POST['amt']?> > 0) ? performAction('process') : window.location.replace('index.php');">Process Ticket<?= $_POST['amt'] > 1 ? 's' : '';?></button>
+            <button onclick="window.location.replace('schedule.php');">Cancel</button>
+            <button onclick="(<?=$_POST['amt']?> > 0) ? performAction('process') : window.location.replace('schedule.php');">Process Ticket<?= $_POST['amt'] > 1 ? 's' : '';?></button>
         </center>
     </body>
 </html>

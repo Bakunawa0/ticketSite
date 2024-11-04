@@ -5,7 +5,7 @@
         $movieQuery = "SELECT movieName, price FROM tbl_movies WHERE movieID = ".$_COOKIE['movieID'];
         $movieInfo = $conn->query($movieQuery)->fetch_assoc();
     } else {
-        header('location: index.php');
+        header('location: schedule.php');
         die();
     }
 ?>
@@ -24,6 +24,7 @@
                         <span style="text-align: right">* ₱<?=sprintf("%.2f", $movieInfo['price'])?> ₱<?=sprintf("%.2f", $_COOKIE['total'])?></span>
                     </p>
                 </div>
+                <input type="button" name="back" value="Return to Schedule" onclick="window.location.replace('schedule.php')">
             </center>
     </body>
 </html>
