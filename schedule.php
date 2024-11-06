@@ -8,6 +8,7 @@
 <html>
     <body>
         <h1>Schedule For Today</h1>
+        <h2>Welcome, <?=$_POST['name']?></h2>
         <div style="font-family: monospace;">
             <center>
                 <table>

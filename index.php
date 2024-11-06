@@ -4,18 +4,29 @@
     if(isset($_POST['username']) && isset($_POST['password'])) {
         $acctQuery = "SELECT * FROM tbl_users";
         $accounts = $conn->query($acctQuery);
+        $accountMatch = false;
+        $matchedAccount = '';
 
         while($account = $accounts->fetch_assoc()) {
-            if ($account['username'] == $_POST['username']) {
-                if ($account['password'] == $_POST['password']) {
-                    header("location: schedule.php");
-                    die();
-                } else {
-                    echo '<h2>Badmatch password; type better</h2>';
-                }
-            } else {
-                echo '<h2>Nonsuch name value; fuck off</h2>';
+            if ($account['username'] == $_POST['username'] && $account['password'] == $_POST['password']) {
+                $accountMatch = true;
+                $matchedAccount = $account;
+            } 
+        }
+
+        if ($accountMatch) {
+            // inject POST data into the next page
+            echo "
+                <form method='POST' name='transmitName' id='transmitName' action=''>
+                    <input type='hidden' name='name' value='".$matchedAccount['firstName']." ".$matchedAccount['lastName']."'>
+                </form>
+            ";
+            if ($matchedAccount['admin?']) {
+                echo '<script>document.getElementById("transmitName").action="edit_schedule.php"; document.transmitName.submit();</script>';
             }
+                echo '<script>document.getElementById("transmitName").action="schedule.php"; document.transmitName.submit();</script>';
+        } else {
+            echo '<h2>Nonsuch acct deetos; capping possible?</h2>';
         }
     }
 ?>
