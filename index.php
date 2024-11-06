@@ -4,17 +4,15 @@
     if(isset($_POST['username']) && isset($_POST['password'])) {
         $acctQuery = "SELECT * FROM tbl_users";
         $accounts = $conn->query($acctQuery);
-        $accountMatch = false;
-        $matchedAccount = '';
+        $matchedAccount = NULL;
 
         while($account = $accounts->fetch_assoc()) {
             if ($account['username'] == $_POST['username'] && $account['password'] == $_POST['password']) {
-                $accountMatch = true;
                 $matchedAccount = $account;
             } 
         }
 
-        if ($accountMatch) {
+        if (isset($matchedAccount)) {
             // inject POST data into the next page
             echo "
                 <form method='POST' name='transmitName' id='transmitName' action=''>
