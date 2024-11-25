@@ -8,4 +8,3 @@
     if (!$conn) {
         die("VBAD: ".mysqli_connect_error());
     }
-?>
