@@ -3,6 +3,7 @@
 
     $sched_req = "SELECT * FROM tbl_movies ORDER BY timeStart";
     $schedule = $conn->query($sched_req);
+    var_dump($_POST);
 ?>
 
 <html>
@@ -18,6 +19,7 @@
                             <table>
                                 <tr>
                                     <th>Time</th>
+                                    <th>Poster</th>
                                     <th>Film</th>
                                     <th>Rating</th>
                                     <th>Edit</th>
@@ -25,6 +27,7 @@
                                 <?php while ($row = $schedule->fetch_assoc()) {?>
                                     <tr>
                                         <td><?=$row['timeStart'];?></td>
+                                        <td><img height=100 src="<?=$row['moviePoster']?>"></td>
                                         <td><?=$row['movieName'];?></td>
                                         <td>[<?=$row['rating'];?>]</td>
                                         <td>

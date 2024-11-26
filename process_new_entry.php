@@ -8,8 +8,8 @@ $postDir = "uploads/"; //poster directory
 
 $newMovie = "INSERT INTO tbl_movies (`movieName`, `rating`, `price`, `timeStart`, `runTime`, `moviePoster`) VALUES (";
 
-$conflict = false; // if there is a schedule conflict
 $newMovie .= "'".$_POST['movieName']."','".$_POST['rating']."','".$_POST['price']."','".$_POST['timeStart']."','".$_POST['runTime']."'";
+$conflict = false; // if there is a schedule conflict
 
 $newEndTime = $_POST['timeStart'] + $_POST['runTime']; // end time of the new movie
 while ($row = $schedule->fetch_assoc()) {
@@ -23,16 +23,17 @@ while ($row = $schedule->fetch_assoc()) {
     }
 }
 
-if (is_null($_POST['moviePoster'])) { // check poster
-    $newMovie .= ", NULL)";
+file_put_contents('php://stderr', print_r(($_POST['moviePoster'] === NULL) ? "empty\n" : "not empty: ".$_POST['moviePoster'].'\n', TRUE));
+
+if ($_POST['moviePoster'] === NULL) { // check poster
+    $newMovie .= ", 'uploads/missing.png')";
 } else {
-    if (getimagesize($_FILES['moviePoster']['tmp_name']) !== false && $_FILES['moviePoster']['size'] < 10000000) { // if this is truly an image of proper size
+    if (getimagesize($_FILES['moviePoster']['tmp_name']) && $_FILES['moviePoster']['size'] < 10000000) { // if this is truly an image of proper size
         $poster = $postDir.basename($_FILES['moviePoster']['tmp_name']);
-        $postDir .= $poster;
-        move_uploaded_file($_FILES['moviePoster']['tmp_name'], $postDir);
-        $newMovie .= ", '$postDir')";
+        move_uploaded_file($_FILES['moviePoster']['tmp_name'], $poster);
+        $newMovie .= ", '$poster')";
     } else {
-        $newMovie .= ", NULL)";
+        $newMovie .= ", 'uploads/missing.png')";
     }
 }
 
