@@ -2,5 +2,7 @@
 
 include("mysql_connect.php");
 
-$sched_req = "SELECT * FROM tbl_movies ORDER BY timeStart";
-$schedule = $conn->query($sched_req);
+$conn->query("DELETE FROM tbl_movies WHERE movieID = ".$_POST['movieID']);
+
+header("location: edit_schedule.php");
+die();

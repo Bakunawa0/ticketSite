@@ -25,16 +25,14 @@ while ($row = $schedule->fetch_assoc()) {
 
 file_put_contents('php://stderr', print_r(($_POST['moviePoster'] === NULL) ? "empty\n" : "not empty: ".$_POST['moviePoster'].'\n', TRUE));
 
-if ($_POST['moviePoster'] === NULL) { // check poster
+try  { // if this is truly an image
+    getimagesize($_FILES['moviePoster']['tmp_name']);
+    $poster = $postDir.basename($_FILES['moviePoster']['tmp_name']);
+    move_uploaded_file($_FILES['moviePoster']['tmp_name'], $poster);
+    $newMovie .= ", '$poster')";
+} catch (Error $e) {
+    file_put_contents('php://stderr', print_r("Fail from size\n", TRUE));
     $newMovie .= ", 'uploads/missing.png')";
-} else {
-    if (getimagesize($_FILES['moviePoster']['tmp_name']) && $_FILES['moviePoster']['size'] < 10000000) { // if this is truly an image of proper size
-        $poster = $postDir.basename($_FILES['moviePoster']['tmp_name']);
-        move_uploaded_file($_FILES['moviePoster']['tmp_name'], $poster);
-        $newMovie .= ", '$poster')";
-    } else {
-        $newMovie .= ", 'uploads/missing.png')";
-    }
 }
 
 if (!$conflict) {
