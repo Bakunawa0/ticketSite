@@ -14,6 +14,7 @@
                 <table>
                     <tr>
                         <th>Time</th>
+                        <th>Poster</th>
                         <th>Film</th>
                         <th>Rating</th>
                         <th>Sell</th>
@@ -21,6 +22,7 @@
                     <?php while ($row = $schedule->fetch_assoc()) {?>
                         <tr>
                             <td><?=$row['timeStart'];?></td>
+                            <td><img height=100 src="<?=$row['moviePoster']?>"></td>
                             <td><?=$row['movieName'];?></td>
                             <td>[<?=$row['rating'];?>]</td>
                             <td>
