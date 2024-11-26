@@ -30,10 +30,20 @@
                                         <td><?=$row['movieName'];?></td>
                                         <td>[<?=$row['rating'];?>]</td>
                                         <td>
-                                            <form action="make_ticket.php" method="POST" onsubmit="return confirm('Sell ticket for <?=$row['movieName'];?>?');">
+                                            <form action="shift_movie.php" method="POST">
+                                                <input type="hidden" name="movieID" value="<?=$row['movieID'];?>">
+                                                <input type="hidden" name="action"value="up">
+                                                <input type="submit" value="↑">
+                                            </form>
+                                            <form action="shift_movie.php" method="POST"></form>
+                                                <input type="hidden" name="movieID" value="<?=$row['movieID'];?>">
+                                                <input type="hidden" name="amt"value="down">
+                                                <input type="submit" value="↓">
+                                            </form>
+                                            <form action="delete_movie.php" method="POST" onsubmit="return confirm('Delete <?=$row['movieName'];?>?');">
                                                 <input type="hidden" name="movieID" value="<?=$row['movieID'];?>">
                                                 <input type="hidden" name="amt"value=1>
-                                                <input type="submit" value="Sell Ticket">
+                                                <input type="submit" value="Delete">
                                             </form>
                                         </td>
                                     </tr>

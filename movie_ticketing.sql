@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 29, 2024 at 03:26 PM
+-- Generation Time: Nov 26, 2024 at 03:38 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,17 +33,32 @@ CREATE TABLE `tbl_movies` (
   `rating` varchar(4) NOT NULL,
   `price` float(5,2) NOT NULL,
   `timeStart` int(4) NOT NULL,
-  `runTime` int(4) NOT NULL
+  `runTime` int(4) NOT NULL,
+  `moviePoster` varchar(255) DEFAULT 'uploads/missing.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `tbl_movies`
 --
 
-INSERT INTO `tbl_movies` (`movieID`, `movieName`, `rating`, `price`, `timeStart`, `runTime`) VALUES
-(1896, 'Electric Dreams', 'PG', 200.00, 700, 190),
-(1897, 'Felix The Cat', 'X', 250.75, 800, 90),
-(1898, 'Deadpool & Wolverine', 'R', 250.75, 900, 200);
+INSERT INTO `tbl_movies` (`movieID`, `movieName`, `rating`, `price`, `timeStart`, `runTime`, `moviePoster`) VALUES
+(1913, 'Non', 'G', 200.00, 900, 90, 'uploads/phpI5pQoY'),
+(1914, 'cromulent', 'PG13', 250.00, 1300, 100, 'uploads/phpiQDYTM'),
+(1916, 'no poster', 'PG', 200.00, 1530, 90, 'uploads/missing.png'),
+(1917, 'A Clockwork Orange', 'R16', 250.00, 1700, 136, 'uploads/missing.png');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_transactions`
+--
+
+CREATE TABLE `tbl_transactions` (
+  `transactionID` int(6) NOT NULL,
+  `date` date NOT NULL DEFAULT current_timestamp(),
+  `movieName` varchar(255) NOT NULL,
+  `transactionAmt` float(5,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -76,7 +91,15 @@ INSERT INTO `tbl_users` (`userID`, `username`, `password`, `firstName`, `lastNam
 -- Indexes for table `tbl_movies`
 --
 ALTER TABLE `tbl_movies`
-  ADD PRIMARY KEY (`movieID`);
+  ADD PRIMARY KEY (`movieID`),
+  ADD KEY `movieName` (`movieName`);
+
+--
+-- Indexes for table `tbl_transactions`
+--
+ALTER TABLE `tbl_transactions`
+  ADD PRIMARY KEY (`transactionID`),
+  ADD KEY `movieName` (`movieName`);
 
 --
 -- Indexes for table `tbl_users`
@@ -92,13 +115,29 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_movies`
 --
 ALTER TABLE `tbl_movies`
-  MODIFY `movieID` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1899;
+  MODIFY `movieID` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1918;
+
+--
+-- AUTO_INCREMENT for table `tbl_transactions`
+--
+ALTER TABLE `tbl_transactions`
+  MODIFY `transactionID` int(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
   MODIFY `userID` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tbl_transactions`
+--
+ALTER TABLE `tbl_transactions`
+  ADD CONSTRAINT `tbl_transactions_ibfk_1` FOREIGN KEY (`movieName`) REFERENCES `tbl_movies` (`movieName`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
