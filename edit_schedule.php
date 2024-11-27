@@ -6,6 +6,17 @@
 ?>
 
 <html>
+    <head>
+        <title>Prepare Schedule</title>
+        <script>
+            function shift_movie(action, id) {
+                var target = document.getElementById(id);
+
+                document.getElementById("action"+id).value = action;
+                target.submit();
+            }
+        </script>
+    </head>
     <body>
         <h1>Schedule For Today</h1>
         <h2>Welcome, <?=$_POST['name']?></h2>
@@ -23,22 +34,22 @@
                                     <th>Rating</th>
                                     <th>Edit</th>
                                 </tr>
-                                <?php while ($row = $schedule->fetch_assoc()) {?>
+                                <?php for ($i = 1; $row = $schedule->fetch_assoc(); $i++) {?>
                                     <tr>
                                         <td><?=$row['timeStart'];?></td>
                                         <td><img height=100 src="<?=$row['moviePoster']?>"></td>
                                         <td><?=$row['movieName'];?></td>
                                         <td>[<?=$row['rating'];?>]</td>
                                         <td>
-                                            <form action="shift_movie.php" method="POST">
+                                            <form id="<?=$row['movieID']?>" action="shift_movie.php" method="POST">
                                                 <input type="hidden" name="movieID" value="<?=$row['movieID'];?>">
-                                                <input type="hidden" name="action"value="up">
-                                                <input type="submit" value="↑">
-                                            </form>
-                                            <form action="shift_movie.php" method="POST"></form>
-                                                <input type="hidden" name="movieID" value="<?=$row['movieID'];?>">
-                                                <input type="hidden" name="amt"value="down">
-                                                <input type="submit" value="↓">
+                                                <input type="hidden" id="action<?=$row['movieID']?>" name="action" value="">
+                                                <?php if ($i > 1) {?>
+                                                    <input type="button" onclick="shift_movie('up','<?=$row['movieID'];?>')" value="↑">
+                                                <?php }?>
+                                                <?php if ($i < $schedule->num_rows) {?>
+                                                    <input type="button" onclick="shift_movie('down','<?=$row['movieID'];?>')" value="↓">
+                                                <?php }?>
                                             </form>
                                             <form action="delete_movie.php" method="POST" onsubmit="return confirm('Delete <?=$row['movieName'];?>?');">
                                                 <input type="hidden" name="movieID" value="<?=$row['movieID'];?>">
@@ -47,7 +58,7 @@
                                             </form>
                                         </td>
                                     </tr>
-                                <?php }?>
+                                <?php } unset($i);?>
                             </table>
                         </td>
                         <td>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 26, 2024 at 03:38 AM
+-- Generation Time: Nov 27, 2024 at 07:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,10 +42,10 @@ CREATE TABLE `tbl_movies` (
 --
 
 INSERT INTO `tbl_movies` (`movieID`, `movieName`, `rating`, `price`, `timeStart`, `runTime`, `moviePoster`) VALUES
-(1913, 'Non', 'G', 200.00, 900, 90, 'uploads/phpI5pQoY'),
+(1913, 'Non', 'G', 200.00, 1030, 90, 'uploads/phpI5pQoY'),
 (1914, 'cromulent', 'PG13', 250.00, 1300, 100, 'uploads/phpiQDYTM'),
-(1916, 'no poster', 'PG', 200.00, 1530, 90, 'uploads/missing.png'),
-(1917, 'A Clockwork Orange', 'R16', 250.00, 1700, 136, 'uploads/missing.png');
+(1921, 'A Clockwork Orange', 'R16', 200.00, 900, 136, 'uploads/phpiufB6y'),
+(1927, 'radical', 'PG13', 200.00, 1700, 60, 'uploads/missing.png');
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_movies`
 --
 ALTER TABLE `tbl_movies`
-  MODIFY `movieID` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1918;
+  MODIFY `movieID` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1928;
 
 --
 -- AUTO_INCREMENT for table `tbl_transactions`
