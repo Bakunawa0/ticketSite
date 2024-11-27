@@ -45,16 +45,16 @@
                                                 <input type="hidden" name="movieID" value="<?=$row['movieID'];?>">
                                                 <input type="hidden" id="action<?=$row['movieID']?>" name="action" value="">
                                                 <?php if ($i > 1) {?>
-                                                    <input type="button" onclick="shift_movie('up','<?=$row['movieID'];?>')" value="↑">
+                                                    <input type="image" src="icons/up.png" onclick="shift_movie('up','<?=$row['movieID'];?>')" height=20>
                                                 <?php }?>
                                                 <?php if ($i < $schedule->num_rows) {?>
-                                                    <input type="button" onclick="shift_movie('down','<?=$row['movieID'];?>')" value="↓">
+                                                    <input type="image" src="icons/down.png" onclick="shift_movie('down','<?=$row['movieID'];?>')" height=20>
                                                 <?php }?>
                                             </form>
                                             <form action="delete_movie.php" method="POST" onsubmit="return confirm('Delete <?=$row['movieName'];?>?');">
                                                 <input type="hidden" name="movieID" value="<?=$row['movieID'];?>">
                                                 <input type="hidden" name="amt"value=1>
-                                                <input type="submit" value="Delete">
+                                                <input type="image" src="icons/trash.png" height=20>
                                             </form>
                                         </td>
                                     </tr>

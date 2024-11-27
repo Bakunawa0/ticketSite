@@ -32,7 +32,7 @@ try  { // if this is truly an image
     $newMovie .= ", '$poster')";
 } catch (Error $e) {
     file_put_contents('php://stderr', print_r("Fail from size\n", TRUE));
-    $newMovie .= ", 'uploads/missing.png')";
+    $newMovie .= ", 'icons/missing.png')";
 }
 
 if (!$conflict) {
