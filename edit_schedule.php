@@ -1,8 +1,11 @@
 <?php 
     include('mysql_connect.php');
+    include('time_handling.php');
+    
 
     $sched_req = "SELECT * FROM tbl_movies ORDER BY timeStart";
     $schedule = $conn->query($sched_req);
+
 ?>
 
 <html>
@@ -40,9 +43,9 @@
                             <option value="R16">R-16</option>
                             <option value="R">R</option>
                         </select><br>
-                        <label for="timeStart">Time Slot (24H):</label>
-                        <input type="text" required id="timeStart" name="timeStart"><br>
-                        <label for="runTime">Runtime (min):</label>
+                        <label for="timeStart">Time Slot:</label>
+                        <input type="time" required id="timeStart" name="timeStart"><br>
+                        <label for="runTime">Runtime (hh:mm):</label>
                         <input type="text" required id="runTime" name="runTime"><br>
 
                         <input type="hidden" name="name" value="<?=$_POST['name']?>"> <!-- preserve the username -->
@@ -53,6 +56,7 @@
                 <table>
                     <tr>
                         <th>Time</th>
+                        <th>End</th>
                         <th>Poster</th>
                         <th>Film</th>
                         <th>Rating</th>
@@ -60,7 +64,8 @@
                     </tr>
                     <?php for ($i = 1; $row = $schedule->fetch_assoc(); $i++) {?>
                         <tr>
-                            <td><?=$row['timeStart'];?></td>
+                            <td><?=preg_filter("`...$`", "", $row['timeStart']);?></td>
+                            <td style="text-align: center;"><?=preg_filter("`...$`", "", $row['timeEnd']);?></td>
                             <td><img height=100 src="<?=$row['moviePoster']?>"></td>
                             <td><?=$row['movieName'];?></td>
                             <td>[<?=$row['rating'];?>]</td>

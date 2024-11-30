@@ -1,8 +1,9 @@
 <?php
 
 include("mysql_connect.php");
+include("time_handling.php");
 
-$sched_req = "SELECT * FROM tbl_movies ORDER BY timeStart";
+$sched_req = "SELECT movieID, timeStart, timeEnd FROM tbl_movies ORDER BY timeStart";
 $schedule = $conn->query($sched_req);
 $buffer = ["", "", ""]; // buffer to contain 3 row entries: the one before the target, the target, and the one after the target
 $beforeID = 0; // id of movie before target
@@ -34,16 +35,25 @@ if ($buffer[2] == $_POST['movieID']) { // if target is at the end of the schedul
 }
 // file_put_contents('php://stderr', print_r([$beforeID, $afterID], TRUE));
 
-$targetTime = $conn->query("SELECT timeStart FROM tbl_movies WHERE movieID = ".$_POST['movieID'])->fetch_column();
+$targetTime = $conn->query("SELECT timeStart, runTime FROM tbl_movies WHERE movieID = ".$_POST['movieID']);
 
 if ($action == "up") { // swap target with before
-    $beforeTime = $conn->query("SELECT timeStart FROM tbl_movies WHERE movieID = ".$beforeID)->fetch_column();
-    $conn->query("UPDATE tbl_movies SET timeStart = '".$beforeTime."' WHERE movieID = ".$_POST['movieID']);
-    $conn->query("UPDATE tbl_movies SET timeStart = '".$targetTime."' WHERE movieID = ".$beforeID);
+    $beforeTime = $conn->query("SELECT timeStart, runTime FROM tbl_movies WHERE movieID = ".$beforeID);
+    $conn->query("UPDATE tbl_movies SET timeStart = '".$beforeTime->fetch_column()."' WHERE movieID = ".$_POST['movieID']);
+    $conn->query("UPDATE tbl_movies SET timeStart = '".$targetTime->fetch_column()."' WHERE movieID = ".$beforeID);
+
+    // adjust endTime of before to reflect new timeStart
+    $conn->query("UPDATE tbl_movies SET timeEnd = '".timeAdd($targetTime->fetch_column(), $targetTime->fetch_column(1))."' WHERE movieID = ".$beforeID);
+    $conn->query("UPDATE tbl_movies SET timeEnd = '".timeAdd($beforeTime->fetch_column(), $beforeTime->fetch_column(1))."' WHERE movieID = ".$_POST['movieID']);
+
 } else if ($action == "down") { // swap target with after
-    $afterTime= $conn->query("SELECT timeStart FROM tbl_movies WHERE movieID = ".$afterID)->fetch_column();
+    $afterTime= $conn->query("SELECT timeStart, runTime FROM tbl_movies WHERE movieID = ".$afterID);
     $conn->query("UPDATE tbl_movies SET timeStart = '".$afterTime."' WHERE movieID = ".$_POST['movieID']);
-    $conn->query("UPDATE tbl_movies SET timeStart = '".$targetTime."' WHERE movieID = ".$afterID);
+    $conn->query("UPDATE tbl_movies SET timeStart = '".$targetTime->fetch_column()."' WHERE movieID = ".$afterID);
+
+    // adjust endTIme of after to reflect new timeStart
+    $conn->query("UPDATE tbl_movies SET timeEnd = '".timeAdd($afterTime->fetch_column(), $afterTime->fetch_column(1))."' WHERE movieID = ".$_POST['movieID']);
+    $conn->query("UPDATE tbl_movies SET timeEnd = '".timeAdd($targetTime->fetch_column(), $targetTime->fetch_column(1))."' WHERE movieID = ".$afterID);
 }
 
 header("location: edit_schedule.php");
