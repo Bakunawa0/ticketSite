@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 27, 2024 at 07:44 PM
+-- Generation Time: Dec 02, 2024 at 12:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,8 +32,9 @@ CREATE TABLE `tbl_movies` (
   `movieName` varchar(255) NOT NULL,
   `rating` varchar(4) NOT NULL,
   `price` float(5,2) NOT NULL,
-  `timeStart` int(4) NOT NULL,
-  `runTime` int(4) NOT NULL,
+  `timeStart` time NOT NULL,
+  `runTime` time NOT NULL,
+  `timeEnd` time NOT NULL,
   `moviePoster` varchar(255) DEFAULT 'icons/missing.png'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -41,11 +42,9 @@ CREATE TABLE `tbl_movies` (
 -- Dumping data for table `tbl_movies`
 --
 
-INSERT INTO `tbl_movies` (`movieID`, `movieName`, `rating`, `price`, `timeStart`, `runTime`, `moviePoster`) VALUES
-(1913, 'Non', 'G', 200.00, 900, 90, 'uploads/phpI5pQoY'),
-(1914, 'cromulent', 'PG13', 250.00, 1030, 100, 'uploads/phpiQDYTM'),
-(1921, 'A Clockwork Orange', 'R16', 200.00, 1300, 136, 'uploads/phpiufB6y'),
-(1927, 'radical', 'PG13', 200.00, 1700, 60, 'icons/missing.png');
+INSERT INTO `tbl_movies` (`movieID`, `movieName`, `rating`, `price`, `timeStart`, `runTime`, `timeEnd`, `moviePoster`) VALUES
+(1970, 'Non', 'G', 200.00, '12:30:00', '01:30:00', '14:00:00', 'icons/missing.png'),
+(1971, 'no poster', 'G', 200.00, '10:30:00', '02:00:00', '12:30:00', 'icons/missing.png');
 
 -- --------------------------------------------------------
 
@@ -115,7 +114,7 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_movies`
 --
 ALTER TABLE `tbl_movies`
-  MODIFY `movieID` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1928;
+  MODIFY `movieID` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1972;
 
 --
 -- AUTO_INCREMENT for table `tbl_transactions`
