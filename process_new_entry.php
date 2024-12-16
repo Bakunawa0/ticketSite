@@ -15,6 +15,15 @@ $conflict = false; // if there is a schedule conflict
 $newMovie .= timeAdd($_POST['timeStart'], $_POST['runTime'])."'"; // calculate endTime
 // file_put_contents('php://stderr', print_r([$start, $lengt, $endTime, $newMovie], TRUE));
 
+while ($row = $schedule->fetch_assoc()) {
+    if (isInRange($row['timeStart'], $row['timeEnd'], $_POST['timeStart'])) {
+        $conflict = true;
+    }
+    if (isInRange($row['timeStart'], $row['timeEnd'], timeAdd($_POST['timeStart'], $_POST['runTime']))) {
+        $conflict = true;
+    }
+}
+$schedule->data_seek(0);
 
 try  { // if this is truly an image
     getimagesize($_FILES['moviePoster']['tmp_name']);

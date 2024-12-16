@@ -21,3 +21,19 @@ function timeAdd($a, $b) : string {
 
     return $start->format("H:i");
 }
+
+function isInRange($start, $end, $time) {
+    $inRange = false;
+// file_put_contents('php://stderr', print_r([$start,$end,$time], TRUE));
+
+    $start = DateTime::createFromFormat("!H:i:s", $start);
+    $end = DateTime::createFromFormat("!H:i:s", $end);
+    $time = DateTime::createFromFormat("!H:i", $time);
+
+    if ($start <= $time && $time < $end) {
+        $inRange = true;
+    }
+// file_put_contents('php://stderr', print_r(($start <= $time && $time < $end) ? "true\n" : "false\n", TRUE));
+
+    return $inRange;
+}
