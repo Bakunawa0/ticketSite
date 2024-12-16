@@ -1,5 +1,6 @@
 <?php 
     include('mysql_connect.php');
+    session_start();
 
     if(isset($_POST['username']) && isset($_POST['password'])) {
         $acctQuery = "SELECT * FROM tbl_users";
@@ -14,17 +15,24 @@
 
         if (isset($matchedAccount)) {
             // inject POST data into the next page
-            echo "
-                <form method='POST' name='transmitName' id='transmitName' action=''>
-                    <input type='hidden' name='name' value='".$matchedAccount['firstName']." ".$matchedAccount['lastName']."'>
-                </form>
-            ";
+            // echo "
+            //     <form method='POST' name='transmitName' id='transmitName' action=''>
+            //         <input type='hidden' name='name' value='".$matchedAccount['firstName']." ".$matchedAccount['lastName']."'>
+            //     </form>
+            // ";
+            $_SESSION['name'] = $matchedAccount['firstName']." ".$matchedAccount['lastName'];
+            $_SESSION['admin?'] = $matchedAccount['admin?'];
             if ($matchedAccount['admin?']) {
-                echo '<script>document.getElementById("transmitName").action="edit_schedule.php"; document.transmitName.submit();</script>';
+                // echo '<script>document.getElementById("transmitName").action="edit_schedule.php"; document.transmitName.submit();</script>';
+                header("location: edit_schedule.php");
+                die();
+            } else {
+                // echo '<script>document.getElementById("transmitName").action="schedule.php"; document.transmitName.submit();</script>';
+                header("location: schedule.php");
+                die();
             }
-                echo '<script>document.getElementById("transmitName").action="schedule.php"; document.transmitName.submit();</script>';
         } else {
-            echo '<h2>Nonsuch acct deetos; capping possible?</h2>';
+            echo '<script>alert("Incorrect account details. Please retry.");</script>';
         }
     }
 ?>

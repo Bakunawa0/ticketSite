@@ -1,5 +1,10 @@
 <?php 
     include('mysql_connect.php');
+    include('login_check.php');
+    if ($_SESSION['admin?']) {
+        header("location: index.php");
+        die();
+    }
 
     $sched_req = "SELECT * FROM tbl_movies ORDER BY timeStart";
     $schedule = $conn->query($sched_req);
@@ -8,7 +13,7 @@
 <html>
     <body>
         <h1>Schedule For Today</h1>
-        <h2>Welcome, <?=$_POST['name']?></h2>
+        <h2>Welcome, <?=$_SESSION['name']?></h2>
         <div style="font-family: monospace;">
             <center>
                 <table>
