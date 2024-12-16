@@ -8,6 +8,9 @@
         header('location: schedule.php');
         die();
     }
+
+    // log the transaction in tbl_transactions
+    $conn->query("INSERT INTO tbl_transactions (`movieName`, `transactionAmt`) VALUES ('".$movieInfo['movieName']."','".$_COOKIE['total']."')");
 ?>
 
 <html>

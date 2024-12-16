@@ -9,7 +9,7 @@ function timeAdd($a, $b) : string {
         if (preg_match("`^[0-9]+:..$`", $b)) {
             $b .= ":00";
         }
-file_put_contents('php://stderr', print_r([$a,$b], TRUE));
+// file_put_contents('php://stderr', print_r([$a,$b], TRUE));
         $start = DateTime::createFromFormat("!H:i:s", $a);
         $lengt = DateTime::createFromFormat("!G:i:s", $b);
 // file_put_contents('php://stderr', print_r([$start,$lengt], TRUE));
