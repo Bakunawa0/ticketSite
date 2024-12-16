@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 02, 2024 at 12:39 AM
+-- Generation Time: Dec 16, 2024 at 05:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,8 +43,9 @@ CREATE TABLE `tbl_movies` (
 --
 
 INSERT INTO `tbl_movies` (`movieID`, `movieName`, `rating`, `price`, `timeStart`, `runTime`, `timeEnd`, `moviePoster`) VALUES
-(1970, 'Non', 'G', 200.00, '12:30:00', '01:30:00', '14:00:00', 'icons/missing.png'),
-(1971, 'no poster', 'G', 200.00, '10:30:00', '02:00:00', '12:30:00', 'icons/missing.png');
+(1973, 'wayang', 'G', 250.00, '10:30:00', '01:30:00', '12:00:00', 'uploads/phpw6JjkI'),
+(1974, 'Shromp', 'PG13', 200.00, '13:35:00', '02:00:00', '15:35:00', 'uploads/php2j9RCf'),
+(1975, 'MOive', 'G', 200.00, '12:00:00', '01:35:00', '13:35:00', 'uploads/phpKPGELG');
 
 -- --------------------------------------------------------
 
@@ -58,6 +59,13 @@ CREATE TABLE `tbl_transactions` (
   `movieName` varchar(255) NOT NULL,
   `transactionAmt` float(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Dumping data for table `tbl_transactions`
+--
+
+INSERT INTO `tbl_transactions` (`transactionID`, `date`, `movieName`, `transactionAmt`) VALUES
+(1, '2024-12-16', 'wayang', 500.00);
 
 -- --------------------------------------------------------
 
@@ -114,13 +122,13 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_movies`
 --
 ALTER TABLE `tbl_movies`
-  MODIFY `movieID` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1972;
+  MODIFY `movieID` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1976;
 
 --
 -- AUTO_INCREMENT for table `tbl_transactions`
 --
 ALTER TABLE `tbl_transactions`
-  MODIFY `transactionID` int(6) NOT NULL AUTO_INCREMENT;
+  MODIFY `transactionID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_users`
